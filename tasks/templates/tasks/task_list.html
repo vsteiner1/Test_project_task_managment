@@ -5,46 +5,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'tasks/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
 <body>
     <h1>Task List</h1>
-    <a href="{% url 'add_task' %}">Add Task</a>
-    <ul>
+    <a href="{% url 'add_task' %}">
+        <button type="button" class="btn btn-primary">Add Task</button>
+    </a>
+    <ul class="list-group">
         <h2>Uncompleted Tasks!!!</h2>
         {% for task in incomplete_tasks %}
-        <li>
+        <li class="list-group-item">
             {{ task.title }} (Due: {{ task.due_date }})
-            <a href="{% url 'edit_task' task.pk %}">Edit</a>
-            <form action="{% url 'delete_task' task.pk %}" method="POST">
+            <a href="{% url 'edit_task' task.pk %}">
+                <button type="button" class="btn btn-secondary">Edit</button>
+            </a>
+            <form action="{% url 'complete_task' task.pk %}" method="POST" style="display:inline;"></form>
                 {% csrf_token %}
-                <button type="submit">Delete</button>
+                <button type="submit" class="btn btn-success">Complete</button>
             </form>
-            <form action="{% url 'complete_task' task.pk %}" method="POST" style="display:inline;">
+            <form action="{% url 'delete_task' task.pk %}" method="POST" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit">Complete</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
             </form>
+
         </li>
         {% empty %}
         <li>No tasks available.</li>
         {% endfor %}
     </ul>
 
-    <ul>
+    <ul class="list-group">
         <h2>Completed Tasks</h2>
         {% for task in completed_tasks %}
-        <li>
+        <li class="list-group-item">
             {{ task.title }} (Due: {{ task.due_date }})
-            <a href="{% url 'edit_task' task.pk %}">Edit</a>
-            <form action="{% url 'delete_task' task.pk %}" method="POST">
+            <a href="{% url 'edit_task' task.pk %}">
+                <button type="submit" class="btn btn-secondary">Edit</button>
+            </a>
+            <form action="{% url 'incomplete_task' task.pk %}" method="POST" style="display:inline;"></form>
                 {% csrf_token %}
-                <button type="submit">Delete</button>
+                <button type="submit" class="btn btn-warning">Incomplete</button>
             </form>
-            <form action="{% url 'incomplete_task' task.pk %}" method="POST" style="display:inline;">
+            <form action="{% url 'delete_task' task.pk %}" method="POST" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit">Incomplete</button>
+                <button type="submit" class="btn btn-danger">Delete</button>
             </form>
-            <!-- Optionally add a delete link -->
         </li>
         {% empty %}
         <li>No tasks available.</li>
