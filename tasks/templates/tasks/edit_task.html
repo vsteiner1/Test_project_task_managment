@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'tasks/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Task</title>
-</head>
+{% block title %}
+    Add Task
+{% endblock %}
 
-<body>
-    <h1>Edit Task</h1>
+{% block content %}
+    <h2>Edit Task</h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }} <!-- Render form fields -->
-        <button type="submit">Update Task</button>
+        <button type="submit" class="btn btn-primary">Update Task</button>
     </form>
-    <a href="{% url 'task_list' %}">Back to Task List</a>
-</body>
-
-</html>
+    <br>
+    <a href="{% url 'task_list' %}">
+        <button type="submit" class="btn btn-secondary">Back</button>
+    </a>
+{% endblock %}
