@@ -1,54 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'tasks/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task List</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'tasks/css/style.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+{% block title %}
+    Task List
+{% endblock %}
 
-<body>
+{% block content %}
     <h1>Task List</h1>
     <a href="{% url 'add_task' %}">
         <button type="button" class="btn btn-primary">Add Task</button>
     </a>
+    <hr>
     <ul class="list-group">
-        <h2>Uncompleted Tasks!!!</h2>
+        <h2>Incompleted Tasks</h2>
         {% for task in incomplete_tasks %}
         <li class="list-group-item">
-            {{ task.title }} (Due: {{ task.due_date }})
+            Title: {{ task.title }}  |  Due Date: {{ task.due_date }}  |  Category: {{task.category}}
             <a href="{% url 'edit_task' task.pk %}">
                 <button type="button" class="btn btn-secondary">Edit</button>
             </a>
-            <form action="{% url 'complete_task' task.pk %}" method="POST" style="display:inline;"></form>
+            <form action="{% url 'complete_task' task.pk %}" method="POST" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-success">Complete</button>
+                <button type="submit" class="btn btn-success">Completed</button>
             </form>
             <form action="{% url 'delete_task' task.pk %}" method="POST" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
-
         </li>
         {% empty %}
         <li>No tasks available.</li>
         {% endfor %}
     </ul>
-
+    <p></p>
     <ul class="list-group">
         <h2>Completed Tasks</h2>
         {% for task in completed_tasks %}
         <li class="list-group-item">
-            {{ task.title }} (Due: {{ task.due_date }})
+            Title: {{ task.title }}  |  Due Date: {{ task.due_date }}  |  Category: {{task.category}}
             <a href="{% url 'edit_task' task.pk %}">
                 <button type="submit" class="btn btn-secondary">Edit</button>
             </a>
-            <form action="{% url 'incomplete_task' task.pk %}" method="POST" style="display:inline;"></form>
+            <form action="{% url 'incomplete_task' task.pk %}" method="POST" style="display:inline;">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-warning">Incomplete</button>
+                <button type="submit" class="btn btn-warning">Incompleted</button>
             </form>
             <form action="{% url 'delete_task' task.pk %}" method="POST" style="display:inline;">
                 {% csrf_token %}
@@ -59,6 +53,4 @@
         <li>No tasks available.</li>
         {% endfor %}
     </ul>
-</body>
-
-</html>
+{% endblock %}
