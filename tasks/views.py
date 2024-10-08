@@ -6,11 +6,10 @@ from .forms import TaskForm  # Make sure you have a TaskForm defined
 def task_list(request):
     tasks = Task.objects.all()  # Get all tasks
     completed_tasks = [task for task in tasks if task.completed]
-    incomplete_tasks = [task for task in tasks if not task.completed]
-    print(completed_tasks)
+    uncomplete_tasks = [task for task in tasks if not task.completed]
     return render(request, 'tasks/task_list.html', {
         'completed_tasks': completed_tasks,  # Korrigierter Schlüssel
-        'incomplete_tasks': incomplete_tasks  # Korrigierter Schlüssel
+        'uncomplete_tasks': uncomplete_tasks  # Korrigierter Schlüssel
     })
 
 def add_task(request):
@@ -50,7 +49,7 @@ def complete_task(request, task_id):
         return redirect('task_list')  # Leitet zur Aufgabenliste weiter
     return redirect('task_list')  # Leitet auc
 
-def incomplete_task(request, task_id):
+def uncomplete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)  # Holt die Aufgabe anhand der ID
     if request.method == 'POST':
         task.completed = False  # Setzt das completed-Feld auf True

@@ -3,10 +3,10 @@ from django.db import models
 
 class Task(models.Model):
     CATEGORY_CHOICES = [
-        ('work', 'Work'),
-        ('personal', 'Personal'),
-        ('shopping', 'Shopping'),
-        ('other', 'Other'),
+        ('Work', 'Work'),
+        ('Personal', 'Personal'),
+        ('Shopping', 'Shopping'),
+        ('Other', 'Other'),
     ]
     title = models.CharField(max_length=200)
     due_date = models.DateField()
