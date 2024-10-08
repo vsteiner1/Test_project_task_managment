@@ -6,6 +6,7 @@ class Task(models.Model):
         ('Work', 'Work'),
         ('Personal', 'Personal'),
         ('Shopping', 'Shopping'),
+        ('School', 'School'),
         ('Other', 'Other'),
     ]
     title = models.CharField(max_length=200)
